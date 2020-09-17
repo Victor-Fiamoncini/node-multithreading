@@ -1,12 +1,12 @@
 {
-  "name": "node-worker-threads-study",
+  "name": "node-multithreading",
   "author": {
     "name": "Victor B. Fiamoncini",
     "email": "victor.fiamoncini@gmail.com"
   },
   "license": "MIT",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon ./src/index",
+    "dev": "NODE_ENV=development nodemon ./src/server",
     "build": "babel ./src --out-dir ./build --copy-files --delete-dir-on-start"
 	},
   "dependencies": {
