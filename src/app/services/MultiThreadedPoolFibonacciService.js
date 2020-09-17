@@ -1,7 +1,12 @@
 const wt = require('worker_threads')
+const Pool = require('worker-threads-pool')
+const { cpus } = require('os')
 const { iterate } = require('fibonacci')
 
-class MultiThreadedFibonacciService {
+const numberOfCpuCores = cpus.length
+const threadPool = new Pool({ max: numberOfCpuCores })
+
+class MultiThreadedPoolFibonacciService {
 	async run({ iterations }) {
 		return new Promise((resolve, reject) => {
 			const worker = new wt.Worker(__filename, { workerData: { iterations } })
@@ -23,4 +28,4 @@ if (!wt.isMainThread) {
 	wt.parentPort.postMessage(result)
 }
 
-module.exports = MultiThreadedFibonacciService
+module.exports = MultiThreadedPoolFibonacciService

@@ -8,10 +8,11 @@
   "scripts": {
     "dev": "NODE_ENV=development nodemon ./src/server",
     "build": "babel ./src --out-dir ./build --copy-files --delete-dir-on-start"
-	},
+  },
   "dependencies": {
     "express": "^4.17.1",
-    "fibonacci": "^1.6.7"
+    "fibonacci": "^1.6.7",
+    "worker-threads-pool": "^2.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
