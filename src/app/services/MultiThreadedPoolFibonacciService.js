@@ -9,15 +9,23 @@ const threadPool = new Pool({ max: numberOfCpuCores })
 class MultiThreadedPoolFibonacciService {
 	async run({ iterations }) {
 		return new Promise((resolve, reject) => {
-			const worker = new wt.Worker(__filename, { workerData: { iterations } })
+			threadPool.acquire(
+				__filename,
+				{ workerData: { iterations } },
+				(err, worker) => {
+					if (err) reject(err)
 
-			worker.on('message', resolve)
-			worker.on('error', reject)
-			worker.on('exit', code => {
-				if (code !== 0) {
-					reject(new Error(`Worker has been stopped with error code: ${code}`))
+					worker.on('message', resolve)
+					worker.on('error', reject)
+					worker.on('exit', code => {
+						if (code !== 0) {
+							reject(
+								new Error(`Worker has been stopped with error code: ${code}`)
+							)
+						}
+					})
 				}
-			})
+			)
 		})
 	}
 }
